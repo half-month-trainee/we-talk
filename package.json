@@ -1,0 +1,23 @@
+{
+  "name": "we-talk",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "description": "",
+  "scripts": {
+    "commit": "cz",
+    "start": "yarn start:client",
+    "start:client": "yarn --cwd packages/client start",
+    "build": "yarn build:client",
+    "build:client": "yarn --cwd packages/client build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/half-month-trainee/we-talk.git"
+  },
+  "devDependencies": {
+    "commitizen": "^4.2.3"
+  }
+}
