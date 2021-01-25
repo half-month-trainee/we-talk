@@ -21,7 +21,7 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "typeRoots": [
-      "./types"
+      "./types, "
     ]
   },
   "include": [

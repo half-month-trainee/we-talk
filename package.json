@@ -7,17 +7,35 @@
   ],
   "description": "",
   "scripts": {
+    "bootstrap": "lerna bootstrap",
     "commit": "cz",
-    "start": "yarn start:client",
-    "start:client": "yarn --cwd packages/client start",
-    "build": "yarn build:client",
-    "build:client": "yarn --cwd packages/client build"
+    "start": "lerna run --stream start",
+    "start:client": "lerna run --stream --scope {@we-talk/client,@we-talk/common} start",
+    "start:server": "lerna run --stream --scope {@we-talk/server,@we-talk/common} start",
+    "build": "lerna run build",
+    "build:client": "lerna run --stream --scope {@we-talk/client,@we-talk/common} build"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/half-month-trainee/we-talk.git"
   },
   "devDependencies": {
-    "commitizen": "^4.2.3"
+    "@typescript-eslint/eslint-plugin": "^4.14.0",
+    "@typescript-eslint/parser": "^4.14.0",
+    "commitizen": "^4.2.3",
+    "cz-conventional-changelog": "^3.3.0",
+    "eslint": "^7.12.1",
+    "eslint-config-standard": "^16.0.2",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-react": "^7.22.0",
+    "eslint-plugin-standard": "^5.0.0",
+    "lerna": "^3.22.1"
+  },
+  "config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog"
+    }
   }
 }
