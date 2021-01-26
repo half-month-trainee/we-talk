@@ -1,9 +1,11 @@
 import fastify from 'fastify'
-import { authRouter } from './auth'
+import { authRouterPlugin } from './auth'
+import { userRouterPlugin } from './user'
 
 const server = fastify({ logger: true })
 
-server.register(authRouter)
+server.register(authRouterPlugin)
+server.register(userRouterPlugin)
 
 server.listen(2333, (err, address) => {
   if (err) {

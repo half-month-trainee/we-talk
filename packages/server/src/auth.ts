@@ -2,7 +2,7 @@ import { FastifyPluginCallback } from 'fastify'
 import { LoginDTO, RegisterDTO, API_PREFIX, response } from '@we-talk/common'
 import { prisma } from './prisma'
 
-export const authRouter: FastifyPluginCallback = async (server) => {
+export const authRouterPlugin: FastifyPluginCallback = async (server) => {
   server.post<{Body: RegisterDTO}>(`${API_PREFIX}/register`, async (req) => {
     await prisma.user.create({ data: req.body })
     return response({})
