@@ -1,10 +1,8 @@
 import React, { createContext, useContext, useState, FC } from 'react'
-import { UserVO } from '@we-talk/common'
 import { ContextValue, initContextValue } from './utils'
+import { UserContextData } from '@we-talk/common'
 
-type UserType = Pick<UserVO, 'id'|'username'|'nickname'|'avatar'|'intro'>
-                        & { token: string }
-                        | null
+type UserType = UserContextData | null
 
 const initUser = initContextValue<UserType>(null)
 
