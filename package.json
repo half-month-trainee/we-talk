@@ -9,7 +9,7 @@
   "scripts": {
     "bootstrap": "lerna bootstrap",
     "commit": "cz",
-    "start": "lerna run --parallel --stream start",
+    "start": "lerna run --parallel start",
     "start:client": "lerna run --parallel --scope {@we-talk/client,@we-talk/common} start",
     "start:server": "lerna run --parallel --scope {@we-talk/server,@we-talk/common} start",
     "build": "lerna run build",
