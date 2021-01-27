@@ -1,3 +1,4 @@
+import { ErrorStatus } from './ErrorStatus'
 import { SafeUserVO, UserVO } from './VO'
 
 export * from './VO'
@@ -6,13 +7,14 @@ export * from './ErrorStatus'
 
 export const API_PREFIX = '/api'
 
-export type ResponseType<T> = {
+export type ResponseType<T = unknown> = {
   errMsg: string,
   status: number,
-  res: T
+  res?: T
 }
 
-export const response = <T>(res: T, status = 200, errMsg = ''): ResponseType<T> => ({ errMsg, status, res })
+export const response = <T>(res: T, status = ErrorStatus.Ok, errMsg = ''): ResponseType<T> => ({ errMsg, status, res })
+export const emptyResponse = (status = 200, errMsg = ''): ResponseType => ({ status, errMsg })
 
 export type UserContextData = SafeUserVO & { token: string }
 
