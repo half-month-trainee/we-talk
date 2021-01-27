@@ -5,7 +5,7 @@ import { prisma, PrismaErrorCode } from '../utils/prisma'
 import { makeUserSafe } from '../utils/password'
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime'
 import { RelationshipStatus } from '@prisma/client'
-import { findRelationshipWith } from 'src/services/relationship.service'
+import { findRelationshipWith } from '../services/relationship.service'
 
 export const userRouterPlugin: FastifyPluginCallback = async (server) => {
   /**
