@@ -30,9 +30,3 @@ export const jwtPreHandler: RouteHandlerMethod = async (req, reply) => {
 }
 
 export const jwtOpts: RouteShorthandOptions = { preHandler: jwtPreHandler }
-
-export const jwtPlugin: FastifyPluginCallback = (server) => {
-  server.decorateRequest('user', null)
-  server.decorate('jwtPreHandler', jwtPreHandler)
-  server.decorate('jwtOpts', jwtOpts)
-}

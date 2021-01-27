@@ -1,6 +1,6 @@
 import fastify from 'fastify'
-import { authRouterPlugin } from './route/auth'
-import { userRouterPlugin } from './route/user'
+import { authRouterPlugin } from './routes/auth'
+import { userRouterPlugin } from './routes/user'
 
 const server = fastify({ logger: true })
 

@@ -1,5 +1,5 @@
 import { FastifyPluginCallback } from 'fastify'
-import { LoginDTO, RegisterDTO, API_PREFIX, response, ErrorStatus } from '@we-talk/common'
+import { LoginDTO, RegisterDTO, API_PREFIX, response, ErrorStatus, createBearer } from '@we-talk/common'
 import { prisma, PrismaErrorCode } from '../utils/prisma'
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime'
 import { sign } from '../utils/jwtUtils'
@@ -13,16 +13,15 @@ export const authRouterPlugin: FastifyPluginCallback = async (server) => {
     try {
       const password = await encryptPassword(req.body.password)
       await prisma.user.create({ data: { ...req.body, password } })
+      return response({})
     } catch (error) {
       if (error instanceof PrismaClientKnownRequestError) {
         if (error.code === PrismaErrorCode.UniqueConstants) {
           return response(error, ErrorStatus.Conflict, '用户名已注册')
         }
       }
-      reply.status(ErrorStatus.InternalServerError)
-      return response(error, ErrorStatus.InternalServerError, 'Server error')
+      throw error
     }
-    return response({})
   })
 
   /**
@@ -33,13 +32,13 @@ export const authRouterPlugin: FastifyPluginCallback = async (server) => {
     if (user) {
       const passwordSame = await comparePassword(req.body.password, user.password)
       if (!passwordSame) {
-        return response({}, ErrorStatus.NotFound, '用户名或密码不存在')
+        return response(null, ErrorStatus.NotFound, '用户名或密码不存在')
       }
 
-      const token = sign({ id: user.id, username: user.username })
+      const token = createBearer(sign({ id: user.id, username: user.username }))
       return response({ ...makeUserSafe(user), token })
     } else {
-      return response({}, ErrorStatus.NotFound, '用户名或密码不存在')
+      return response(null, ErrorStatus.NotFound, '用户名或密码不存在')
     }
   })
 }
