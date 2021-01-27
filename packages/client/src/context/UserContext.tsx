@@ -1,24 +1,43 @@
-import React, { createContext, useContext, useState, FC } from 'react'
-import { UserVO } from '@we-talk/common'
-import { ContextValue, initContextValue } from './utils'
+import React, { createContext, FC } from 'react'
+import { SafeUserVO, UserContextData } from '@we-talk/common'
+import { makeAutoObservable } from 'mobx'
+import { deleteToken, getToken, saveToken } from '../utils/auth.util'
 
-type UserType = Pick<UserVO, 'id'|'username'|'nickname'|'avatar'|'intro'>
-                        & { token: string }
-                        | null
+class UserObservable {
+  user: SafeUserVO | null = null
+  token = getToken()
 
-const initUser = initContextValue<UserType>(null)
+  constructor () {
+    makeAutoObservable(this)
+  }
 
-export const UserContext = createContext<ContextValue<UserType>>(initUser)
+  updateUser (user: SafeUserVO) {
+    this.user = user
+  }
 
-export function useUserContext () {
-  return useContext(UserContext)
+  updateToken (token: string) {
+    this.token = token
+    saveToken(token)
+  }
+
+  clearToken () {
+    this.token = null
+    deleteToken()
+  }
+
+  updateAll (context: UserContextData) {
+    this.user = context
+    this.token = context.token
+  }
 }
 
+export const userObservable = new UserObservable()
+
+export const UserContext = createContext<UserObservable>(userObservable)
+
 export const UserProvider: FC = ({ children }) => {
-  const [data, setData] = useState<UserType>(null)
-  const contextValue: ContextValue<UserType> = { data, setData }
   return (
-    <UserContext.Provider value={contextValue}>
+    <UserContext.Provider value={userObservable}>
       {children}
     </UserContext.Provider>
   )

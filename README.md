@@ -1,7 +1,7 @@
 **注意点**
 
-1. 使用yarn开发，开发前只需要使用 `yarn` 命令就可以完成所有软链接
-2. 项目使用`yarn workspace`管理，`client`是前端，`backend`是后端，`common`是公共模块，存放公共类型和方法
+1. 使用yarn开发，使用 `yarn` 命令就安装依赖, `yarn bootstrap` 命令软连接
+2. 项目使用`lerna`管理，`client`是前端，`backend`是后端，`common`是公共模块，存放公共类型和方法
 3. 项目前端使用`create react app`构建，使用`tailwind` `twin.macro` `styled-component`管理样式
 4. 开发使用vscode，因为tailwind的插件只有vscode支持最好，idea党真的泪目
 5. 开发建议安装插件 `tailwindcss` 与 `styled-component` 【应该都是最多安装人数直接搜排最上面的插件】
