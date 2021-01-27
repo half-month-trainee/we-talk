@@ -1,9 +1,12 @@
-import React, { FC } from 'react'
+import React, { FC, useContext, useEffect } from 'react'
 import { LoginDTO } from '@we-talk/common'
 import { ErrorMessage, Field, Form, Formik } from 'formik'
 import { object, SchemaOf, string } from 'yup'
-import { useUserContext } from '../context/UserContext'
 import { login } from '../services/auth.api'
+import { UserContext } from '../context/UserContext'
+import { history } from '../config/router.config'
+
+import { deleteToken } from '../utils/auth.util'
 
 const loginRegisterSchema: SchemaOf<LoginDTO> = object({
   username: string().required('请输入用户名'),
@@ -13,11 +16,17 @@ const loginRegisterSchema: SchemaOf<LoginDTO> = object({
 const loginInitialValue: LoginDTO = { username: '', password: '' }
 
 const Login: FC = () => {
-  const { setData } = useUserContext()
+  const userStore = useContext(UserContext)
+
+  useEffect(() => deleteToken(), [])
 
   const handleSubmit = async (value: LoginDTO) => {
     const { data } = await login(value)
-    setData(data.res)
+    console.log(data)
+    if (data.res) {
+      userStore.updateAll(data.res)
+      history.push('/')
+    }
   }
 
   return (
