@@ -6,6 +6,6 @@
   "types": "dist/index",
   "scripts": {
     "start": "tsc -w --project tsconfig.json",
-    "build": "yarn start"
+    "build": "npm run start"
   }
 }
