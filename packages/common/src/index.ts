@@ -13,7 +13,7 @@ export type ResponseType<T = unknown> = {
   res?: T
 }
 
-export const response = <T>(res: T, status = ErrorStatus.Ok, errMsg = ''): ResponseType<T> => ({ errMsg, status, res })
+export const response = <T>(res?: T, status = ErrorStatus.Ok, errMsg = ''): ResponseType<T> => ({ errMsg, status, res })
 export const emptyResponse = (status = 200, errMsg = ''): ResponseType => ({ status, errMsg })
 
 export type UserContextData = SafeUserVO & { token: string }
