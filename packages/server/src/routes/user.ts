@@ -4,6 +4,8 @@ import { jwtOpts } from '../utils/jwtUtils'
 import { prisma, PrismaErrorCode } from '../utils/prisma'
 import { makeUserSafe } from '../utils/password'
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime'
+import { RelationshipStatus } from '@prisma/client'
+import { findRelationshipWith } from 'src/services/relationship.service'
 
 export const userRouterPlugin: FastifyPluginCallback = async (server) => {
   /**
@@ -43,5 +45,25 @@ export const userRouterPlugin: FastifyPluginCallback = async (server) => {
       }
       throw e
     }
+  })
+
+  /**
+   * [GET /api/current/related-user] 获取当前用户相关用户
+   */
+  server.get<{
+    Params: { id: string }, Querystring: { status: RelationshipStatus }
+  }>(`${API_PREFIX}/current/related-user`, jwtOpts, async (req) => {
+    const users = await findRelationshipWith(req.user?.id !!, req.query.status)
+    return response(users)
+  })
+
+  /**
+   * [GET /api/user/:id/related-user] 获取用户
+   */
+  server.get<{
+    Params: { id: string }, Querystring: { status: RelationshipStatus }
+  }>(`${API_PREFIX}/user/:id/related-user`, jwtOpts, async (req) => {
+    const users = await findRelationshipWith(Number(req.params.id), req.query.status)
+    return response(users)
   })
 }

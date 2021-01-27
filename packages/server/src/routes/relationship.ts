@@ -25,10 +25,10 @@ export const relationshipRouterPlugin: FastifyPluginCallback = async (server) =>
   /**
    * [GET /api/relationship] 查找关系
    */
-  server.get<{Params: {userId?: string, status: RelationshipStatus}}>(`${API_PREFIX}/relationship`, jwtOpts,
-    async ({ params, user }) => {
-      const userId = notBlank(params.userId) ? Number(params.userId) : user?.id !!
-      const relationships = await findRelationshipWith(userId, params.status)
+  server.get<{Querystring: {userId?: string, status: RelationshipStatus}}>(`${API_PREFIX}/relationship`, jwtOpts,
+    async ({ query, user }) => {
+      const userId = notBlank(query.userId) ? Number(query.userId) : user?.id !!
+      const relationships = await findRelationshipWith(userId, query.status)
       return response(relationships)
     })
 }
