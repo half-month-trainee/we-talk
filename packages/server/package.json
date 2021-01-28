@@ -10,6 +10,7 @@
     "start": "concurrently -k -p \"[{name}]\" npm:watch:*",
     "build": "tsc",
     "serve": "npm run build && node dist/index.js",
+    "mock": "npm run build && node dist/mock.js",
     "introspect": "prisma introspect",
     "generate": "prisma generate",
     "load:db": "npm run introspect && npm run generate",
@@ -19,12 +20,14 @@
     "@prisma/client": "^2.15.0",
     "@we-talk/common": "*",
     "bcrypt": "^5.0.0",
+    "faker": "^5.2.0",
     "fastify": "^3.10.1",
     "jsonwebtoken": "^8.5.1"
   },
   "devDependencies": {
     "@prisma/cli": "^2.15.0",
     "@types/bcrypt": "^3.0.0",
+    "@types/faker": "^5.1.5",
     "@types/jsonwebtoken": "^8.5.0"
   }
 }

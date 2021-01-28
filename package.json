@@ -12,7 +12,8 @@
     "start": "dotenv -- lerna run --parallel start",
     "start:client": "lerna run --parallel --scope {@we-talk/client,@we-talk/common} start",
     "start:server": "dotenv -- lerna run --parallel --scope {@we-talk/server,@we-talk/common} start",
-    "load:db": "dotenv -- lerna run --scope @we-talk/server load:db",
+    "load:db": "dotenv -- lerna run --stream --scope @we-talk/server load:db",
+    "mock": "dotenv -- lerna run --stream --scope @we-talk/server mock",
     "build": "lerna run build",
     "build:client": "lerna run --stream --scope {@we-talk/client,@we-talk/common} build"
   },
