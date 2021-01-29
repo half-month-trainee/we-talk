@@ -15,7 +15,8 @@
     "load:db": "dotenv -- lerna run --stream --scope @we-talk/server load:db",
     "mock": "dotenv -- lerna run --stream --scope @we-talk/server mock",
     "build": "lerna run build",
-    "build:client": "lerna run --stream --scope {@we-talk/client,@we-talk/common} build"
+    "build:client": "lerna run --stream --scope {@we-talk/client,@we-talk/common} build",
+    "build:server": "lerna run --stream --scope {@we-talk/server,@we-talk/common} build"
   },
   "repository": {
     "type": "git",
