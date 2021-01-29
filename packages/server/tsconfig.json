@@ -1,5 +1,4 @@
 {
-  "extends": "../../tsconfig.json",
   "compilerOptions": {
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
@@ -13,7 +12,8 @@
       "node"
     ],
     "typeRoots": [
-      "src/types"
+      "./src/types/",
+      "./node_modules/@types",
     ],
     "allowJs": true,
     "skipLibCheck": true,

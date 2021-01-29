@@ -1,5 +1,5 @@
 import { ErrorStatus, extractToken, JwtPayload, response } from '@we-talk/common'
-import { FastifyPluginCallback, RouteHandlerMethod, RouteShorthandOptions } from 'fastify'
+import { RouteHandlerMethod, RouteShorthandOptions } from 'fastify'
 import jwt, { JsonWebTokenError } from 'jsonwebtoken'
 import { SECRET_KEY } from '../env'
 

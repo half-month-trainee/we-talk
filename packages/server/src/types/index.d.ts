@@ -15,3 +15,10 @@ declare module 'fastify' {
 declare module 'faker/locale/zh_CN' {
   export * from 'faker'
 }
+
+declare module 'socket.io' {
+  interface Socket {
+    user: JwtPayload | null
+  }
+
+}
