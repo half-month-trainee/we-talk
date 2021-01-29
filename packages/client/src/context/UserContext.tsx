@@ -1,11 +1,13 @@
 import React, { createContext, FC } from 'react'
-import { SafeUserVO, UserContextData } from '@we-talk/common'
+import { RelationshipStatusEnum, SafeUserVO, UserContextData } from '@we-talk/common'
 import { makeAutoObservable } from 'mobx'
-import { deleteToken, getToken, saveToken } from '../utils/auth.util'
+import { deleteToken, getToken, saveToken, saveUser, getUser } from '../utils/auth.util'
+import { fetchCurrentUser, fetchCurrentUserRelated } from '../services/user.api'
 
 class UserObservable {
-  user: SafeUserVO | null = null
+  user = getUser()
   token = getToken()
+  contacts: SafeUserVO[] = []
 
   constructor () {
     makeAutoObservable(this)
@@ -13,11 +15,16 @@ class UserObservable {
 
   updateUser (user: SafeUserVO) {
     this.user = user
+    saveUser(user)
   }
 
   updateToken (token: string) {
     this.token = token
     saveToken(token)
+  }
+
+  updateContacts (contacts: SafeUserVO[]) {
+    this.contacts = contacts
   }
 
   clearToken () {
@@ -26,8 +33,20 @@ class UserObservable {
   }
 
   updateAll (context: UserContextData) {
-    this.user = context
-    this.token = context.token
+    this.updateUser(context)
+    this.updateToken(context.token)
+  }
+
+  async fetchUser () {
+    const { data: { res } } = await fetchCurrentUser()
+    if (res) {
+      this.updateUser(res)
+    }
+  }
+
+  async fetchContacts () {
+    const { data: { res } } = await fetchCurrentUserRelated(RelationshipStatusEnum.Friend)
+    this.updateContacts(res ?? [])
   }
 }
 

@@ -6,6 +6,6 @@
   "types": "dist/index",
   "scripts": {
     "start": "tsc -w --project tsconfig.json",
-    "build": "npm run start"
+    "build": "tsc"
   }
 }

@@ -1,7 +1,7 @@
 import React, { FC } from 'react'
 
-const Contacts: FC = () => {
+const Contact: FC = () => {
   return <div>Here is Auth</div>
 }
 
-export default Contacts
+export default Contact

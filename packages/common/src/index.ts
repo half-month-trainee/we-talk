@@ -4,6 +4,7 @@ import { SafeUserVO, UserVO } from './VO'
 export * from './VO'
 export * from './DTO'
 export * from './ErrorStatus'
+export * from './SocketEvent'
 
 export const API_PREFIX = '/api'
 
