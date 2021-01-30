@@ -5,7 +5,7 @@ import { prisma, PrismaErrorCode } from '../utils/prisma'
 import { makeUserSafe } from '../utils/password'
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime'
 import { RelationshipStatus } from '@prisma/client'
-import { findRelationshipWith } from 'src/services/relationship.service'
+import { findUserWith } from '../services/relationship.service'
 
 export const userRouterPlugin: FastifyPluginCallback = async (server) => {
   /**
@@ -53,7 +53,7 @@ export const userRouterPlugin: FastifyPluginCallback = async (server) => {
   server.get<{
     Params: { id: string }, Querystring: { status: RelationshipStatus }
   }>(`${API_PREFIX}/current/related-user`, jwtOpts, async (req) => {
-    const users = await findRelationshipWith(req.user?.id !!, req.query.status)
+    const users = await findUserWith(Number(req.user?.id !!), req.query.status)
     return response(users)
   })
 
@@ -63,7 +63,7 @@ export const userRouterPlugin: FastifyPluginCallback = async (server) => {
   server.get<{
     Params: { id: string }, Querystring: { status: RelationshipStatus }
   }>(`${API_PREFIX}/user/:id/related-user`, jwtOpts, async (req) => {
-    const users = await findRelationshipWith(Number(req.params.id), req.query.status)
+    const users = await findUserWith(Number(req.params.id), req.query.status)
     return response(users)
   })
 }

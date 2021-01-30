@@ -46,11 +46,11 @@ export async function findUserWith (userId: number, status?: RelationshipStatus)
     where: {
       OR: [{
         relationshipSent: {
-          some: { fromUserId: userId, status }
+          some: { toUserId: userId, status }
         }
       }, {
         relationshipReceived: {
-          some: { toUserId: userId, status }
+          some: { fromUserId: userId, status }
         }
       }]
     }

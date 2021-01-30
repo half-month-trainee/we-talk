@@ -18,12 +18,12 @@
     "module": "esnext",
     "moduleResolution": "node",
     "resolveJsonModule": true,
-    "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
     "typeRoots": [
       "./types, "
-    ]
+    ],
+    "isolatedModules": true
   },
   "include": [
     "src"

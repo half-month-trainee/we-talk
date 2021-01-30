@@ -1,8 +1,8 @@
 import { RelationshipStatus } from '@prisma/client'
 import { API_PREFIX, RelationshipDTO, response } from '@we-talk/common'
 import { FastifyPluginCallback } from 'fastify'
-import { findRelationshipBetween, findRelationshipWith } from 'src/services/relationship.service'
-import { notBlank } from 'src/utils/dataParser'
+import { findRelationshipBetween, findRelationshipWith } from '../services/relationship.service'
+import { notBlank } from '../utils/dataParser'
 import { jwtOpts } from '../utils/jwtUtils'
 import { prisma } from '../utils/prisma'
 

@@ -47,6 +47,7 @@ create table wetalk."message"
     to_user_id   bigint              not null references wetalk."user",
     type         wetalk.message_type not null default 'PlanText',
     content      varchar             not null,
+    read         boolean             not null default false,
     created_at   timestamp           not null default now(),
     updated_at   timestamp           not null
 );

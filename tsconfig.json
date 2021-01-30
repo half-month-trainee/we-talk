@@ -1,14 +1,6 @@
 {
   "extends": "./tsconfig.build.json",
   "compilerOptions": {
-    "baseUrl": "./packages",
-    "paths": {
-      "@we-talk/common": [
-        "common/src"
-      ],
-      "@we-talk/*": [
-        "*/src"
-      ]
-    }
+    "baseUrl": "./packages"
   }
 }

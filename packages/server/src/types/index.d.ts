@@ -11,3 +11,14 @@ declare module 'fastify' {
     user: JwtPayload | null
   }
 }
+
+declare module 'faker/locale/zh_CN' {
+  export * from 'faker'
+}
+
+declare module 'socket.io' {
+  interface Socket {
+    user: JwtPayload | null
+  }
+
+}

@@ -25,6 +25,8 @@ module.exports = {
     'no-use-before-define': 'off',
     'no-unused-vars': 'off',
     '@typescript-eslint/no-use-before-define': ['warn'],
-    'react/prop-types': 'off'
+    'react/prop-types': 'off',
+    'react/display-name': 'off',
+    'node/no-callback-literal': 'off'
   }
 }
