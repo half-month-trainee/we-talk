@@ -8,21 +8,20 @@ const fakeUserCount = 20
 const fakeMessageCount = 30
 const defaultPassword = '123456'
 
-const oneFakeUser = (password: string): RegisterDTO => ({
+const oneFakeUser = (password: string, key: number): RegisterDTO => ({
   username: faker.phone.phoneNumber('1#########'),
   password,
   nickname: faker.name.firstName() + ' ' + faker.name.lastName(),
-  avatar: faker.image.avatar(),
+  avatar: `https://javaee-bay.oss-cn-beijing.aliyuncs.com/we-talk/mock/${key % 20}.jpg?x-oss-process=style/avatar`,
   intro: faker.lorem.sentence()
 })
 
 function generateUsers (password: string, n = fakeUserCount): RegisterDTO[] {
-  return new Array(n).fill(0).map(() => oneFakeUser(password))
+  return new Array(n).fill(0).map((item, index) => oneFakeUser(password, index))
 }
 
 async function insertUsers (users: RegisterDTO[]) {
   const usersWithId = await Promise.all(users.map(data => prisma.user.create({ data })))
-  console.log(JSON.stringify(usersWithId))
   return usersWithId
 }
 

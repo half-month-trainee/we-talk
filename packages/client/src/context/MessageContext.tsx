@@ -13,6 +13,10 @@ export class MessageObservable {
     makeAutoObservable(this)
   }
 
+  get message () {
+    return (withId: number) => this.messageMap.get(withId)
+  }
+
   initMessageMap (map: MessageMap) {
     this.messageMap = map
   }
@@ -25,7 +29,6 @@ export class MessageObservable {
   }
 
   receiveNewMessage (message: MessageVO) {
-    console.log(message)
     const currentUser = userObservable.user
     if (message.fromUserId === currentUser?.id) {
       this.addMessageToMap(message.toUserId, message)
@@ -38,9 +41,7 @@ export class MessageObservable {
 
   addMessageToMap (userId: number, message: MessageVO) {
     const messages = this.messageMap.get(userId)
-    if (messages) {
-      this.messageMap.set(userId, [...messages, message])
-    }
+    this.messageMap.set(userId, [...messages ?? [], message])
   }
 }
 

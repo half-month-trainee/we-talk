@@ -1,4 +1,4 @@
-import { ResponseType, API_PREFIX, SentMessageDTO, LoginDTO, UserContextData, MessageVO } from '@we-talk/common'
+import { ResponseType, API_PREFIX, MessageVO } from '@we-talk/common'
 import { request } from '../config/axios.config'
 
 export const initMessage = () =>

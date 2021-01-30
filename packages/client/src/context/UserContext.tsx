@@ -13,6 +13,10 @@ class UserObservable {
     makeAutoObservable(this)
   }
 
+  get isLogin () {
+    return Boolean(this.token)
+  }
+
   updateUser (user: SafeUserVO) {
     this.user = user
     saveUser(user)

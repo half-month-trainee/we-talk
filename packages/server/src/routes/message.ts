@@ -21,7 +21,7 @@ export const messageRouterPlugin: FastifyPluginCallback = async (server) => {
 }
 
 export const messageSocketPlugin: FastifyPluginCallback = async (server) => {
-  const socketMap: Map<number, Socket> = new Map()
+  const socketMap: Map<number, Socket['id']> = new Map()
 
   const io = new Server(server.server, {
     path: `${API_PREFIX}/message-socket`
@@ -46,18 +46,20 @@ export const messageSocketPlugin: FastifyPluginCallback = async (server) => {
   })
 
   io.on('connection', (socket: Socket) => {
-    socketMap.set(socket.user?.id !!, socket)
+    socketMap.set(socket.user?.id !!, socket.id)
 
     socket.on('disconnect', () => {
       socketMap.delete(socket.user?.id !!)
     })
 
     socket.on(SocketEvent.Send, async (message: SentMessageDTO) => {
+      console.log('SentMessageDTO', JSON.stringify(message))
       const nextMessage = await prisma.message.create({ data: { fromUserId: socket.user?.id!!, ...message } })
-      socket.to(socket.id).emit(SocketEvent.Receive, nextMessage)
-      const targetSocket = socketMap.get(nextMessage.toUserId)
-      if (targetSocket) {
-        targetSocket.emit(SocketEvent.Receive, nextMessage)
+      socket.emit(SocketEvent.Receive, nextMessage)
+      const targetSocketId = socketMap.get(nextMessage.toUserId)
+      if (targetSocketId) {
+        console.log('targetSocketId', targetSocketId)
+        socket.to(targetSocketId).emit(SocketEvent.Receive, nextMessage)
       }
     })
   })

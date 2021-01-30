@@ -13,6 +13,7 @@ model Message {
   toUserId   Int         @map("to_user_id")
   type       MessageType @default(PlanText)
   content    String
+  read       Boolean     @default(false)
   createdAt  DateTime    @default(now()) @map("created_at")
   updatedAt  DateTime    @updatedAt @map("updated_at")
   fromUser   User        @relation("message_from_user_idTouser", fields: [fromUserId], references: [id])

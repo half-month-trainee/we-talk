@@ -1,14 +1,15 @@
 import React, { FC, useContext, useEffect } from 'react'
-import { ChatBubble, ChatBubbleOutline, PeopleAlt, PeopleAltOutlined } from '@material-ui/icons'
+import { ChatBubble, PeopleAlt } from '@material-ui/icons'
 import styled from 'styled-components'
 import tw from 'twin.macro'
 import { Redirect, Route, Switch, NavLink } from 'react-router-dom'
 
 import { UserContext } from '../context/UserContext'
-import { fetchCurrentUser } from '../services/user.api'
-import { checkLogin } from '../utils/auth.util'
 import Chat from './Chat'
 import Contact from './Contact'
+import { useSocket } from '../config/socket.config'
+import { MessageContext } from '../context/MessageContext'
+import { observer } from 'mobx-react-lite'
 
 const Container = tw.main`flex h-screen items-stretch`
 const Bar = tw.section`w-16 flex-shrink-0 border-0 border-r-2 border-gray-100 border-solid items-center`
@@ -32,11 +33,15 @@ const IconNavLink = styled(NavLink).attrs({
   }
 `
 
-const Basic: FC = () => {
+const Basic = observer(() => {
   const userStore = useContext(UserContext)
+  const messageStore = useContext(MessageContext)
   useEffect(() => {
     userStore.fetchUser()
-  }, [userStore])
+    userStore.fetchContacts()
+    messageStore.fetchBasicMessageMap()
+  }, [userStore, messageStore])
+  useSocket(userStore.isLogin)
 
   return (
     <Container>
@@ -57,12 +62,12 @@ const Basic: FC = () => {
             <Contact />
           </Route>
           <Route path="/">
-            <Redirect to={checkLogin() ? '/chat' : '/auth/login'} />
+            <Redirect to={userStore.isLogin ? '/chat' : '/auth/login'} />
           </Route>
         </Switch>
       </Content>
     </Container>
   )
-}
+})
 
 export default Basic
