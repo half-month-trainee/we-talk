@@ -10,22 +10,26 @@ export const socket = io({
   path: `${API_PREFIX}/message-socket`
 })
 
+socket.on(SocketEvent.Receive, (message: MessageVO) => {
+  messageObservable.receiveNewMessage(message)
+})
+
+socket.on('connect_error', (err: any) => {
+  console.log(err)
+  setTimeout(() => {
+    socket.connect()
+  }, 2000)
+})
+
 export function useSocket (isLogin: boolean) {
   // const [connecting, setConnectingState] = useState(false)
 
   useEffect(() => {
+    if (!isLogin) {
+      socket.disconnect()
+    }
+
     isLogin && socket.connect()
-
-    socket.on(SocketEvent.Receive, (message: MessageVO) => {
-      messageObservable.receiveNewMessage(message)
-    })
-
-    socket.on('connect_error', (err: any) => {
-      console.log(err)
-      setTimeout(() => {
-        socket.connect()
-      }, 2000)
-    })
 
     return () => {
       socket.disconnect()

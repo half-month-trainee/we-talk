@@ -1,7 +1,7 @@
 // twin.d.ts
-import 'twin.macro'
 import styledImport, { CSSProp, css as cssImport } from 'styled-components'
-import type { DOMAttributes } from "react";
+import type { DOMAttributes } from 'react'
+import { TwStyle } from 'twin.macro'
 
 declare module 'twin.macro' {
   // The styled and css imports
@@ -12,7 +12,7 @@ declare module 'twin.macro' {
 declare module 'react' {
   // The css prop
   interface HTMLAttributes<T> extends DOMAttributes<T> {
-    css?: CSSProp
+    css?: CSSProp | ((false | TwStyle)[])
   }
   // The inline svg css prop
   interface SVGProps<T> extends SVGProps<SVGSVGElement> {

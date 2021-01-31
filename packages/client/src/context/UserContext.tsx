@@ -13,8 +13,16 @@ class UserObservable {
     makeAutoObservable(this)
   }
 
+  get otherUser () {
+    return this.contacts.filter(item => item.id !== this.user?.id)
+  }
+
   get isLogin () {
     return Boolean(this.token)
+  }
+
+  get contactUser () {
+    return (userId: number) => this.contacts.find(item => item.id === userId)
   }
 
   updateUser (user: SafeUserVO) {

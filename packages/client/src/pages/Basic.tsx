@@ -1,8 +1,8 @@
-import React, { FC, useContext, useEffect } from 'react'
-import { ChatBubble, PeopleAlt } from '@material-ui/icons'
+import React, { useContext, useEffect } from 'react'
+import { ChatBubble, ExitToApp, PeopleAlt } from '@material-ui/icons'
 import styled from 'styled-components'
 import tw from 'twin.macro'
-import { Redirect, Route, Switch, NavLink } from 'react-router-dom'
+import { Route, Switch, NavLink } from 'react-router-dom'
 
 import { UserContext } from '../context/UserContext'
 import Chat from './Chat'
@@ -10,9 +10,15 @@ import Contact from './Contact'
 import { useSocket } from '../config/socket.config'
 import { MessageContext } from '../context/MessageContext'
 import { observer } from 'mobx-react-lite'
+import { Avatar, AvatarSize } from '../components/Avatar'
 
-const Container = tw.main`flex h-screen items-stretch`
-const Bar = tw.section`w-16 flex-shrink-0 border-0 border-r-2 border-gray-100 border-solid items-center`
+const Container = styled.main`
+  ${tw`flex h-screen items-stretch`}
+  background: rgb(240,247,247);
+`
+const Bar = tw.section`w-16 flex-shrink-0 flex flex-col`
+const BarTop = tw.div`flex flex-col items-center flex-1`
+const BarBottom = tw.div`flex-shrink-0`
 const Content = tw.main`flex-1`
 
 const iconNavClassName = 'icon-active'
@@ -20,10 +26,9 @@ const IconNavLink = styled(NavLink).attrs({
   activeClassName: iconNavClassName
 })`
   ${tw`flex items-center justify-center w-full h-16 
-       border-0 border-r-2 border-solid border-transparent
      text-gray-400 transition-colors`}
   &.${iconNavClassName} {
-    ${tw`border-solid border-green-300 text-green-500`}
+    ${tw`text-green-500`}
     :hover {
       ${tw`text-green-600`}
     }
@@ -32,6 +37,8 @@ const IconNavLink = styled(NavLink).attrs({
     ${tw`text-gray-500`}
   }
 `
+
+const AvatarContainer = tw.div`my-5`
 
 const Basic = observer(() => {
   const userStore = useContext(UserContext)
@@ -46,12 +53,22 @@ const Basic = observer(() => {
   return (
     <Container>
       <Bar>
-        <IconNavLink to="/chat">
-           <ChatBubble />
-        </IconNavLink>
-        <IconNavLink to="/contact">
-          <PeopleAlt />
-        </IconNavLink>
+        <BarTop>
+          <AvatarContainer>
+            <Avatar size={AvatarSize.Small} src={userStore.user?.avatar ?? ''} />
+          </AvatarContainer>
+          <IconNavLink to="/chat">
+             <ChatBubble />
+          </IconNavLink>
+          <IconNavLink to="/contact">
+            <PeopleAlt />
+          </IconNavLink>
+        </BarTop>
+        <BarBottom>
+          <IconNavLink to="/auth/login">
+            <ExitToApp />
+          </IconNavLink>
+        </BarBottom>
       </Bar>
       <Content>
         <Switch>
@@ -60,9 +77,6 @@ const Basic = observer(() => {
           </Route>
           <Route path="/contact">
             <Contact />
-          </Route>
-          <Route path="/">
-            <Redirect to={userStore.isLogin ? '/chat' : '/auth/login'} />
           </Route>
         </Switch>
       </Content>

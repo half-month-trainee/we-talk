@@ -17,15 +17,43 @@ export class MessageObservable {
     return (withId: number) => this.messageMap.get(withId)
   }
 
+  get lastMessage () {
+    return (userId: number) => {
+      const messages = this.messageMap.get(userId)
+      if (messages && messages.length > 0) {
+        return messages[messages.length - 1].content
+      } else {
+        return ''
+      }
+    }
+  }
+
   initMessageMap (map: MessageMap) {
     this.messageMap = map
   }
 
   async fetchBasicMessageMap () {
     const { data: { res } } = await initMessage()
+    const nextMessageMap: MessageMap = new Map()
+    function addToMap (userId: number, message: MessageVO) {
+      const messages = nextMessageMap.get(userId)
+      if (messages) {
+        messages.push(message)
+      } else {
+        nextMessageMap.set(userId, [message])
+      }
+    }
     res?.forEach(element => {
-      this.receiveNewMessage(element)
+      const currentUser = userObservable.user
+      if (element.fromUserId === currentUser?.id) {
+        addToMap(element.toUserId, element)
+      } else if (element.toUserId === currentUser?.id) {
+        addToMap(element.fromUserId, element)
+      } else {
+        console.log('id err', currentUser)
+      }
     })
+    this.initMessageMap(nextMessageMap)
   }
 
   receiveNewMessage (message: MessageVO) {
