@@ -11,8 +11,11 @@ import { useSocket } from '../config/socket.config'
 import { MessageContext } from '../context/MessageContext'
 import { observer } from 'mobx-react-lite'
 
-const Container = tw.main`flex h-screen items-stretch`
-const Bar = tw.section`w-16 flex-shrink-0 border-0 border-r-2 border-gray-100 border-solid items-center`
+const Container = styled.main`
+  ${tw`flex h-screen items-stretch`}
+  background: rgb(240,247,247);
+`
+const Bar = tw.section`w-16 flex-shrink-0 items-center`
 const Content = tw.main`flex-1`
 
 const iconNavClassName = 'icon-active'
@@ -20,10 +23,9 @@ const IconNavLink = styled(NavLink).attrs({
   activeClassName: iconNavClassName
 })`
   ${tw`flex items-center justify-center w-full h-16 
-       border-0 border-r-2 border-solid border-transparent
      text-gray-400 transition-colors`}
   &.${iconNavClassName} {
-    ${tw`border-solid border-green-300 text-green-500`}
+    ${tw`text-green-500`}
     :hover {
       ${tw`text-green-600`}
     }

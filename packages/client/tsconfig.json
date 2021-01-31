@@ -20,10 +20,10 @@
     "resolveJsonModule": true,
     "noEmit": true,
     "jsx": "react-jsx",
+    "isolatedModules": true,
     "typeRoots": [
-      "./types, "
-    ],
-    "isolatedModules": true
+      "./types"
+    ]
   },
   "include": [
     "src"

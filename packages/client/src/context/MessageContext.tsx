@@ -17,6 +17,17 @@ export class MessageObservable {
     return (withId: number) => this.messageMap.get(withId)
   }
 
+  get lastMessage () {
+    return (userId: number) => {
+      const messages = this.messageMap.get(userId)
+      if (messages && messages.length > 0) {
+        return messages[messages.length - 1].content
+      } else {
+        return ''
+      }
+    }
+  }
+
   initMessageMap (map: MessageMap) {
     this.messageMap = map
   }

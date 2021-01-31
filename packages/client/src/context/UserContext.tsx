@@ -17,6 +17,10 @@ class UserObservable {
     return Boolean(this.token)
   }
 
+  get contactUser () {
+    return (userId: number) => this.contacts.find(item => item.id === userId)
+  }
+
   updateUser (user: SafeUserVO) {
     this.user = user
     saveUser(user)
