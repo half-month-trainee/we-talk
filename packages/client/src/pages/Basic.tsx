@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react'
-import { ChatBubble, PeopleAlt } from '@material-ui/icons'
+import { ChatBubble, ExitToApp, PeopleAlt } from '@material-ui/icons'
 import styled from 'styled-components'
 import tw from 'twin.macro'
 import { Redirect, Route, Switch, NavLink } from 'react-router-dom'
@@ -10,12 +10,16 @@ import Contact from './Contact'
 import { useSocket } from '../config/socket.config'
 import { MessageContext } from '../context/MessageContext'
 import { observer } from 'mobx-react-lite'
+import { Avatar, AvatarSize } from '../components/Avatar'
+import { Intro } from './Intro'
 
 const Container = styled.main`
   ${tw`flex h-screen items-stretch`}
   background: rgb(240,247,247);
 `
-const Bar = tw.section`w-16 flex-shrink-0 items-center`
+const Bar = tw.section`w-16 flex-shrink-0 flex flex-col`
+const BarTop = tw.div`flex flex-col items-center flex-1`
+const BarBottom = tw.div`flex-shrink-0`
 const Content = tw.main`flex-1`
 
 const iconNavClassName = 'icon-active'
@@ -35,6 +39,8 @@ const IconNavLink = styled(NavLink).attrs({
   }
 `
 
+const AvatarContainer = tw.div`my-5`
+
 const Basic = observer(() => {
   const userStore = useContext(UserContext)
   const messageStore = useContext(MessageContext)
@@ -48,12 +54,22 @@ const Basic = observer(() => {
   return (
     <Container>
       <Bar>
-        <IconNavLink to="/chat">
-           <ChatBubble />
-        </IconNavLink>
-        <IconNavLink to="/contact">
-          <PeopleAlt />
-        </IconNavLink>
+        <BarTop>
+          <AvatarContainer>
+            <Avatar size={AvatarSize.Small} src={userStore.user?.avatar ?? ''} />
+          </AvatarContainer>
+          <IconNavLink to="/chat">
+             <ChatBubble />
+          </IconNavLink>
+          <IconNavLink to="/contact">
+            <PeopleAlt />
+          </IconNavLink>
+        </BarTop>
+        <BarBottom>
+          <IconNavLink to="/auth/login">
+            <ExitToApp />
+          </IconNavLink>
+        </BarBottom>
       </Bar>
       <Content>
         <Switch>
@@ -62,9 +78,6 @@ const Basic = observer(() => {
           </Route>
           <Route path="/contact">
             <Contact />
-          </Route>
-          <Route path="/">
-            <Redirect to={userStore.isLogin ? '/chat' : '/auth/login'} />
           </Route>
         </Switch>
       </Content>

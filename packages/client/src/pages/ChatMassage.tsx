@@ -1,4 +1,4 @@
-import React, { FC, useContext } from 'react'
+import React, { FC, useContext, useEffect, useRef } from 'react'
 import { observer } from 'mobx-react-lite'
 import { useParams } from 'react-router-dom'
 import { MessageContext } from '../context/MessageContext'
@@ -43,6 +43,12 @@ const MessageList = observer(() => {
   const { withId } = useParams<{withId: string}>()
   const messageStore = useContext(MessageContext)
   const userStore = useContext(UserContext)
+  const currentMessage = messageStore.message(Number(withId))
+
+  const markRef = useRef<HTMLDivElement>(null)
+  useEffect(() => {
+    markRef.current?.scrollIntoView({ behavior: 'smooth' })
+  }, [currentMessage])
 
   const getState = (message: MessageVO) => {
     if (userStore.user && message.fromUserId === userStore.user?.id) {
@@ -54,10 +60,11 @@ const MessageList = observer(() => {
   }
   return (
     <MessageListContainer>
-      {messageStore.message(Number(withId))?.map(item => (
+      {currentMessage?.map(item => (
         <Message key={item.id} {...getState(item)}>
         </Message>
       ))}
+      <div ref={markRef} key="mark"></div>
     </MessageListContainer>
   )
 })

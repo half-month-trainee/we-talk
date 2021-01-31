@@ -6,19 +6,24 @@ import { UserProvider } from './context/UserContext'
 import { history } from './config/router.config'
 import { MessageProvider } from './context/MessageContext'
 import { createGlobalStyle } from 'styled-components'
-import tw from 'twin.macro'
+import tw, { GlobalStyles } from 'twin.macro'
+import { Intro } from './pages/Intro'
 
-const GlobalStyle = createGlobalStyle`
+const FontGlobalStyle = createGlobalStyle`
   ${tw`font-sans`}
 `
 
 function App () {
   return (
     <Router history={history}>
-      <GlobalStyle />
+      <FontGlobalStyle />
+      <GlobalStyles />
       <UserProvider>
         <MessageProvider>
           <Switch>
+            <Route exact path="/">
+              <Intro />
+            </Route>
             <Route path="/auth">
               <Auth />
             </Route>

@@ -11,7 +11,7 @@ const Chat: FC = () => {
     <MainContainer>
       <MainListContainer>
         <MainNavSection>
-          Chat
+          Messages
         </MainNavSection>
         <MainContentSection>
           <UserChatList />
