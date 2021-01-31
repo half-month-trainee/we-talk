@@ -10,6 +10,7 @@ import tw from 'twin.macro'
 import { UserContext } from '../context/UserContext'
 import styled from 'styled-components'
 import { Avatar, AvatarSize } from '../components/Avatar'
+import { RightBackground, RightContainer } from '../components/Layout'
 
 type MessageProps = {
   user?: SafeUserVO,
@@ -61,14 +62,11 @@ const MessageList = observer(() => {
   )
 })
 
-const SendMessageContainer = tw.div`h-full w-full p-4 box-border`
-const SendMessageBackground = tw.section`overflow-hidden bg-white shadow-sm h-full rounded-lg box-border flex flex-col`
-const SendForm = styled(Form)`
-  ${tw`flex w-full box-border border-0 border-t-2 border-gray-100 border-solid`}
-`
 const SendFormInput = tw(Field)`text-lg flex-1 p-4 border-0 outline-none`
 const SendFormButton = tw.button`m-2 cursor-pointer hover:bg-blue-600 rounded border-0 pl-3 pr-3 bg-blue-500 text-white shadow-sm`
-
+export const SendForm = styled(Form)`
+  ${tw`flex w-full box-border border-0 border-t-2 border-gray-100 border-solid`}
+`
 type MessageDTO = Pick<SentMessageDTO, 'content'>
 
 const sentMessageSchema: SchemaOf<MessageDTO> = object({
@@ -89,8 +87,8 @@ export const ChatMessage = () => {
   }
 
   return (
-    <SendMessageContainer>
-      <SendMessageBackground>
+    <RightContainer>
+      <RightBackground>
         <MessageList />
         <Formik<MessageDTO>
           initialValues={{ content: '' }}
@@ -105,7 +103,7 @@ export const ChatMessage = () => {
             </SendForm>
           )}
         </Formik>
-      </SendMessageBackground>
-    </SendMessageContainer>
+      </RightBackground>
+    </RightContainer>
   )
 }

@@ -10,4 +10,4 @@ WITH ranked_messages AS (
     where from_user_id = 1 or to_user_id = 1
 )
 SELECT *
-FROM ranked_messages where rn <= 5
+FROM ranked_messages where rn <= 5 ORDER BY id ASC

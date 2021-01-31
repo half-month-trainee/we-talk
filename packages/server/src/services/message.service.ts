@@ -22,7 +22,7 @@ export function findLastNMessagesEachUser (
           ORDER BY id
           DESC) AS rn
       FROM wetalk.message AS m
-      where from_user_id = ${userId} or to_user_id = ${userId}
+      where from_user_id = ${userId} or to_user_id = ${userId} ORDER BY id ASC
     )
     SELECT *
     FROM ranked_messages where rn <= ${messageCount}

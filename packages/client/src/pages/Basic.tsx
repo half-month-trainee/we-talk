@@ -1,4 +1,4 @@
-import React, { FC, useContext, useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { ChatBubble, PeopleAlt } from '@material-ui/icons'
 import styled from 'styled-components'
 import tw from 'twin.macro'

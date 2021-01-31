@@ -13,6 +13,10 @@ class UserObservable {
     makeAutoObservable(this)
   }
 
+  get otherUser () {
+    return this.contacts.filter(item => item.id !== this.user?.id)
+  }
+
   get isLogin () {
     return Boolean(this.token)
   }
