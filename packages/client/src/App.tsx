@@ -11,6 +11,14 @@ import { Intro } from './pages/Intro'
 
 const FontGlobalStyle = createGlobalStyle`
   ${tw`font-sans`}
+
+  .title-font {
+    font-family: 'Noto Serif', serif;
+  }
+
+  .background-base{
+    background: rgb(240,247,247)
+  }
 `
 
 function App () {

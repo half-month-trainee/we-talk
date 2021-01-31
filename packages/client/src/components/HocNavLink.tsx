@@ -37,8 +37,7 @@ const HocNavLink = forwardRef<HTMLAnchorElement, IHocNavLink>(
     }
 
     return (
-        // <Link {...linkProps}>{children(active)}</Link>
-        <></>
+      <Link {...linkProps}>{children(active)}</Link>
     )
   })
 

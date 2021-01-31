@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from 'react'
 import { ChatBubble, ExitToApp, PeopleAlt } from '@material-ui/icons'
 import styled from 'styled-components'
 import tw from 'twin.macro'
-import { Redirect, Route, Switch, NavLink } from 'react-router-dom'
+import { Route, Switch, NavLink } from 'react-router-dom'
 
 import { UserContext } from '../context/UserContext'
 import Chat from './Chat'
@@ -11,7 +11,6 @@ import { useSocket } from '../config/socket.config'
 import { MessageContext } from '../context/MessageContext'
 import { observer } from 'mobx-react-lite'
 import { Avatar, AvatarSize } from '../components/Avatar'
-import { Intro } from './Intro'
 
 const Container = styled.main`
   ${tw`flex h-screen items-stretch`}

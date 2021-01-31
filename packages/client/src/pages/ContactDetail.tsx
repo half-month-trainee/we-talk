@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react-lite'
-import React, { FC, useContext } from 'react'
+import React, { useContext } from 'react'
 import { NavLink, useParams } from 'react-router-dom'
 import tw from 'twin.macro'
 import { Avatar, AvatarSize } from '../components/Avatar'

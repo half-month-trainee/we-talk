@@ -11,7 +11,7 @@ import tw from 'twin.macro'
 import styled from 'styled-components'
 import { NavLink } from 'react-router-dom'
 
-const LoginTitle = tw.h1`text-4xl font-bold text-gray-700 m-0 mb-8`
+const LoginTitle = tw(NavLink)`text-4xl font-bold text-gray-700 m-0 mb-8 hover:text-gray-500 cursor-pointer`
 const LoginContainer = tw.section`flex flex-col min-h-screen`
 const LoginMain = tw.main`flex-1 py-20`
 const FormContainer = tw.div`flex items-center flex-col mx-auto p-10 rounded-lg border-2 border-solid border-gray-200  bg-white max-w-sm`
@@ -58,7 +58,7 @@ const Login: FC = () => {
     <LoginContainer>
       <LoginMain>
         <FormContainer>
-          <LoginTitle>
+          <LoginTitle to="/">
             We Talk
           </LoginTitle>
           <Formik<LoginDTO>
